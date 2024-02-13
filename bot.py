@@ -25,9 +25,16 @@ async def _raise(ctx: Context, *, arg=None):
 
             await ctx.send(msg)
         case "clear":
-            print("Clearing queue")
-            q.clear()
-            await ctx.send(f"Queue cleared, {ctx.author.display_name}")
+            current_roles = [r.name for r in ctx.author.roles]
+
+            if "Admin" in current_roles or "Mod" in current_roles:
+                print("Clearing queue")
+                q.clear()
+                await ctx.send(f"Queue cleared, {ctx.author.display_name}")
+            else:
+                await ctx.send(
+                    f"Sorry {ctx.author.display_name}, only Mods or Admins can clear the queue."
+                )
         case "next":
             if len(q) < 1:
                 await ctx.send("Nobody else in the queue!")
