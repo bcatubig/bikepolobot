@@ -25,12 +25,15 @@ async def _raise(ctx: Context, *, arg=None):
             await ctx.send(msg)
         case "list":
             print("Listing queue")
-            msg = "Here is the current queue:\n"
+            if len(q) < 1:
+                await ctx.send("The queue is empty!")
+            else:
+                msg = "Here is the current queue:\n"
 
-            for person in q:
-                msg += f"- {person}"
+                for person in q:
+                    msg += f"- {person}\n"
 
-            await ctx.send(msg)
+                await ctx.send(msg)
         case "clear":
             current_roles = [r.name for r in ctx.author.roles]
 
