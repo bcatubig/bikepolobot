@@ -3,7 +3,6 @@ from collections import deque
 
 import discord
 from discord.ext import commands
-from discord.ext.commands.context import Context
 
 q = deque()
 
@@ -14,7 +13,11 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 @bot.command(name="raise")
-async def _raise(ctx: Context, *, arg=None):
+async def _raise(
+    ctx: commands.context.Context,
+    *,
+    arg=None,
+):
     match arg:
         case "help":
             msg = "Here are some commands you can run\n"
@@ -69,8 +72,6 @@ async def _raise(ctx: Context, *, arg=None):
             print(f"Adding {ctx.author.display_name} to queue")
             q.append(ctx.author.display_name)
             await ctx.send(f"{ctx.author.display_name} added to queue")
-
-    # await ctx.send(f"Adding you to the queue: {ctx.author}")
 
 
 def main():
