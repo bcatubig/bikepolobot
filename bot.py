@@ -64,6 +64,11 @@ async def _raise(
                 await ctx.send(
                     f"Sorry {ctx.author.mention}, only Mods or Admins can get the next up person"
                 )
+        case "remove":
+            q.remove(ctx.author)
+            await ctx.send(
+                f"{ctx.author.mention}, you have been removed from the queue"
+            )
         case None:
             if ctx.author in q:
                 await ctx.send(f"{ctx.author.mention}, you are already in the queue")
@@ -75,6 +80,8 @@ async def _raise(
 
 def main():
     token: str = os.getenv("DISCORD_TOKEN")
+    if token == "":
+        raise Exception("DISCORD_TOKEN not set")
     bot.run(token)
 
 
