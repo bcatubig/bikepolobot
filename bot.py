@@ -51,7 +51,7 @@ async def _raise(
                 await ctx.send(f"Queue cleared, {ctx.author.mention}")
             else:
                 await ctx.send(
-                    f"Sorry {ctx.author.display_name}, only Mods or Admins can clear the queue."
+                    f"Sorry {ctx.author.mention}, only Mods or Admins can clear the queue."
                 )
         case "next":
             if is_mod_or_admin(ctx.author):
