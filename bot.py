@@ -3,6 +3,7 @@ from collections import deque
 
 import discord
 from discord.ext import commands
+from discord.types.member import Member
 
 q = deque()
 
@@ -55,14 +56,14 @@ async def _raise(
                     await ctx.send("Nobody else in the queue!")
                     return
                 print("popping next person from queue")
-                got = q.popleft()
-                await ctx.send(f"Next up: {got}")
+                got: discord.Member = q.popleft()
+                await ctx.send(f"Next up: {got.mention}")
             else:
                 await ctx.send(
                     f"Sorry {ctx.author.display_name}, only Mods or Admins can get the next up person"
                 )
         case None:
-            if ctx.author.display_name in q:
+            if ctx.author in q:
                 print(f"{ctx.author.display_name} already in the queue")
                 await ctx.send(
                     f"{ctx.author.display_name}, you are already in the queue"
@@ -70,7 +71,7 @@ async def _raise(
                 return
 
             print(f"Adding {ctx.author.display_name} to queue")
-            q.append(ctx.author.display_name)
+            q.append(ctx.author)
             await ctx.send(f"{ctx.author.display_name} added to queue")
 
 
